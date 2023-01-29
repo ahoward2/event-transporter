@@ -10,19 +10,19 @@ import (
 )
 
 type Event struct {
-	Id	 string
+	Id    string
 	AppId string
-	Name string
-	Data map[string]any
+	Name  string
+	Data  map[string]any
 }
 
 type EventReqBody struct {
 	AppId string
-	Name string
-	Data map[string]any
+	Name  string
+	Data  map[string]any
 }
 
-type EventStore []Event;
+type EventStore []Event
 
 var store = EventStore{}
 
@@ -34,8 +34,8 @@ func main() {
 /*
 *	Handle events should take in post requests and publish the events
 * to a Kafka broker. As for now they are simply stored in `store`.
-*/
-func HandleEvents(w http.ResponseWriter, r *http.Request){
+ */
+func HandleEvents(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusCreated)
 	w.Header().Set("Content-Type", "application/json")
@@ -59,13 +59,13 @@ func HandleEvents(w http.ResponseWriter, r *http.Request){
 		if err != nil {
 			http.Error(w, err.Error(), 400)
 		}
-		event := Event{Id: uuid.New().String(),AppId: body.AppId, Name: body.Name, Data: body.Data}
+		event := Event{Id: uuid.New().String(), AppId: body.AppId, Name: body.Name, Data: body.Data}
 		store = append(store, event)
 		jsonResp, err := json.Marshal(event)
 		if err != nil {
 			log.Fatalf("Error occured in JSON marshal. Err: %s", err)
 		}
-		fmt.Printf("jsonResp: %s", string(jsonResp));
+		fmt.Printf("jsonResp: %s", string(jsonResp))
 		w.Write(jsonResp)
 	}
 }
