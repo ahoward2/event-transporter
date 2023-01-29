@@ -32,9 +32,9 @@ func main() {
 }
 
 /*
-	*	Handle events should take in post requests and publish the events
-	* to a Kafka broker. As for now they are simply stored in `store`.
- */
+Handle events should take in post requests and publish the events
+to a Kafka broker. As for now they are simply stored in `store`.
+*/
 func HandleEvents(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusCreated)
